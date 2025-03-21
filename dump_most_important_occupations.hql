@@ -1,0 +1,10 @@
+INSERT OVERWRITE DIRECTORY '/user/cloudera/queries/most_important_occupations'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+SELECT 
+    sym_ratings.user_id, sym_users.occupation, count(*) as num_opinions
+FROM sym_ratings
+JOIN sym_users
+ON sym_ratings.user_id = sym_users.user_id
+GROUP BY sym_ratings.user_id, sym_users.occupation
+ORDER BY num_opinions DESC;
